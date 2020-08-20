@@ -1,0 +1,556 @@
+openapi: 3.0.2
+info:
+  title: Ergast F1 DB OpenAPI Spec
+  description: "This is a *partial* definition of the [Ergast F1 API](https://ergast.com/mrd/) in the OpenAPI 3.0 specification.\
+    \ Of the the endpoints that are implemented here, the url paths and return data schemas are structured\
+    \ to match the structure currently used on the live Ergast API.\n\n  \
+    \ You should be able to use the as a starting\
+    \ point for [generating your client libraries](https://github.com/OpenAPITools/openapi-generator) for use with Ergast, or setting up your own API to use with a copy\
+    \ of the Ergast DB.\
+    \ \n\nSome notes:\n\n - This only defines the JSON data schema, not the XML version of the API return data\n\
+    - Outside of the year, most of the inline parameters used by the Ergast API are not defined here.  \n
+    - The placeholder values for year are not currently implemented."
+  contact:
+    name: Contact the Developer
+    url: http://github.com/adampax
+  license:
+    name: This OpenAPI definition is under MIT License
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+externalDocs:
+  description: The Ergast Developer API
+  url: https://ergast.com/mrd/
+servers:
+- url: https://ergast.com/api/f1
+tags:
+- name: Constructors
+  externalDocs:
+    description: Ergast Docs
+    url: https://ergast.com/mrd/methods/constructors/
+- name: Drivers
+  externalDocs:
+    description: Ergast Docs
+    url: https://ergast.com/mrd/methods/drivers/
+- name: Races
+  externalDocs:
+    description: Race Schedule
+    url: https://ergast.com/mrd/methods/schedule/        
+
+paths:
+  /{year}/constructors.json:
+    parameters:
+      - $ref: '#/components/parameters/offsetParam'
+      - $ref: '#/components/parameters/limitParam'  
+    get:
+      tags: 
+      - Constructors
+      description: ""
+      operationId: getConstructorsByYear
+      parameters:
+        - $ref: '#/components/parameters/yearParam'
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/ConstructorsByYearResponse"
+
+  /{year}/constructorStandings.json:
+    parameters:
+      - $ref: '#/components/parameters/offsetParam'
+      - $ref: '#/components/parameters/limitParam'  
+    get:
+      tags:
+      - Constructors
+      description: ""
+      operationId: getConstructorStandingsByYear
+      parameters:
+        - $ref: '#/components/parameters/yearParam'
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/ConstructorStandingsByYearResponse"
+
+  /{year}/driverStandings.json:
+    parameters:
+      - $ref: '#/components/parameters/offsetParam'
+      - $ref: '#/components/parameters/limitParam'  
+    get:
+      tags:
+      - Drivers
+      description: ""
+      operationId: getDriverStandingsByYear
+      parameters:
+        - $ref: '#/components/parameters/yearParam'
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/DriverStandingsByYearResponse"
+                
+  /{year}/results.json:
+    parameters:
+      - $ref: '#/components/parameters/offsetParam'
+      - $ref: '#/components/parameters/limitParam'  
+    get:
+      tags:
+      - Races
+      description: ""
+      operationId: getResultsByYear
+      parameters:
+        - $ref: '#/components/parameters/yearParam'
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/ResultsByYearResponse"
+  
+  /{year}/{round}/results.json:
+    parameters:
+      - $ref: '#/components/parameters/offsetParam'
+      - $ref: '#/components/parameters/limitParam'  
+    get:
+      tags:
+      - Races
+      description: ""
+      operationId: getResultsByYearAndRound
+      parameters:
+        - $ref: '#/components/parameters/yearParam'
+        - $ref: '#/components/parameters/roundParam'
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/ResultsByYearResponse"
+
+  /{year}.json:
+    parameters:
+      - $ref: '#/components/parameters/offsetParam'
+      - $ref: '#/components/parameters/limitParam'  
+    get:
+      tags:
+      - Races
+      description: ""
+      operationId: getSeasonByYear
+      parameters:
+        - $ref: '#/components/parameters/yearParam'
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/SeasonByYearResponse"
+
+components:
+  schemas:
+    Circuit:
+      type: object
+      properties:
+        circuitId:
+          type: string
+          example: yas_marina        
+        round:
+          type: string
+          example: 21
+        url:
+          type: string
+          example: http://en.wikipedia.org/wiki/Yas_Marina_Circuit          
+        circuitName:
+          type: string
+          example: Yas Marina Circuit
+        Location:
+          type: object
+          properties:
+            lat: 
+              type: string
+              example: 24.4672
+            long:
+              type: string
+              example: 54.6031
+            locality:
+              type: string
+              example: Abu Dhabi
+            country:
+              type: string
+              example: UAE
+    Constructor:
+      type: object
+      properties:
+        constructorId:
+          type: string
+          example: mercedes
+        url:
+          type: string
+          example: http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One
+        name:
+          type: string
+          example: Mercedes
+        nationality:
+          type: string
+          example: German
+    Driver:
+      type: object
+      properties:
+        driverId:
+          type: string
+          example: hamilton
+        permanentNumber: 
+          type: string
+          example: 44
+        code:
+          type: string
+          example: HAM
+        url:
+          type: string
+          example: http://en.wikipedia.org/wiki/Lewis_Hamilton          
+        givenName:
+          type: string
+          example: Lewis
+        familyName:
+          type: string
+          example: Hamilton
+        dateOfBirth: 
+          type: string
+          example: "1985-01-07"
+        nationality:
+          type: string
+          example: British
+    Race:
+      type: object
+      properties:
+        season:
+          type: string
+          example: 2019        
+        round:
+          type: string
+          example: 21
+        url:
+          type: string
+          example: https://en.wikipedia.org/wiki/2019_Abu_Dhabi_Grand_Prix          
+        raceName:
+          type: string
+          example: Abu Dhabi Grand Prix
+        Circuit:
+          type: object
+          $ref:  "#/components/schemas/Circuit"
+        date: 
+          type: string
+          example: "2019-12-01"
+        time: 
+          type: string
+          example: "13:10:00Z"
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Result'           
+    Result:
+      type: object
+      properties:
+        number:
+          type: string
+          example: 44   
+        position:
+          type: string
+          example: 1   
+        positionText:
+          type: string
+          example: 1                          
+        points:
+          type: string
+          example: 26   
+        Driver:
+          type: object
+          $ref:  "#/components/schemas/Driver"
+        Constructor:
+          type: object
+          $ref:  "#/components/schemas/Constructor" 
+        grid:
+          type: string
+          example: 1              
+        laps:
+          type: string
+          example: 55
+        status:
+          type: string
+          example: Finished
+        Time:
+          type: object
+          properties:
+            millis: 
+              type: string
+              example: 5645715
+            time:
+              type: string
+              example: '1:34:05.715'
+        FastestLap:
+          type: object
+          properties:
+            rank: 
+              type: string
+              example: 1
+            lap:
+              type: string
+              example: 53
+            Time:
+              type: object
+              properties:
+                time:
+                  type: string
+                  example: '1:39.283'
+            AverageSpeed:
+              type: object
+              properties:
+                units:
+                  type: string
+                  example: kph              
+                speed:
+                  type: string
+                  example: 201.387
+    
+    ConstructorsByYearResponse:
+      type: object
+      properties:
+        MRData:
+          type: object
+          properties:
+            xmlns:
+              type: string
+            series:
+              type: string
+            url:
+              type: string
+            limit: 
+              type: string
+              example: 30
+            offset:
+              type: string
+              example: 0
+            total:
+              type: string
+              example: 20
+            ConstructorTable:
+              type: object
+              properties:
+                season:
+                  type: string
+                Constructors:
+                  type: array 
+                  items:
+                    $ref: '#/components/schemas/Constructor'    
+    ConstructorStandingsByYearResponse:
+      type: object
+      properties:
+        MRData:
+          type: object
+          properties:
+            xmlns:
+              type: string
+            series:
+              type: string
+            url:
+              type: string
+            limit: 
+              type: string
+              example: 30
+            offset:
+              type: string
+              example: 0
+            total:
+              type: string
+              example: 20
+            StandingsTable:
+              type: object
+              properties:
+                season:
+                  type: string
+                StandingsLists:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      season: 
+                        type: string
+                      round: 
+                        type: string
+                      ConstructorStandings:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            position:
+                              type: string
+                            positionText:
+                              type: string
+                            points: 
+                              type: string
+                            wins:
+                              type: string
+                            Constructor:
+                              type: object 
+                              $ref: '#/components/schemas/Constructor'      
+    DriverStandingsByYearResponse:
+      type: object
+      properties:
+        MRData:
+          type: object
+          properties:
+            xmlns:
+              type: string
+            series:
+              type: string
+            url:
+              type: string
+            limit: 
+              type: string
+              example: 30
+            offset:
+              type: string
+              example: 0
+            total:
+              type: string
+              example: 20
+            StandingsTable:
+              type: object
+              properties:
+                season:
+                  type: string
+                StandingsLists:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      season: 
+                        type: string
+                      round: 
+                        type: string
+                      DriverStandings:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            position:
+                              type: string
+                            positionText:
+                              type: string
+                            points: 
+                              type: string
+                            wins:
+                              type: string
+                            Driver:
+                              type: object 
+                              $ref: '#/components/schemas/Driver'                                          
+                            Constructors:
+                              type: array 
+                              items:
+                                $ref: '#/components/schemas/Constructor'    
+    ResultsByYearResponse:
+      type: object
+      properties:
+        MRData:
+          type: object
+          properties:
+            xmlns:
+              type: string
+            series:
+              type: string
+            url:
+              type: string
+            limit: 
+              type: string
+              example: 30
+            offset:
+              type: string
+              example: 0
+            total:
+              type: string
+              example: 20
+            RaceTable:
+              type: object
+              properties:
+                season:
+                  type: string
+                round:
+                  type: string
+                  description: Only returned if round parameter used
+                Races:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Race'
+          
+    SeasonByYearResponse:
+      properties:
+        MRData:
+          type: object
+          properties:
+            xmlns:
+              type: string
+            series:
+              type: string
+            url:
+              type: string
+            limit: 
+              type: string
+              example: 30
+            offset:
+              type: string
+              example: 0
+            total:
+              type: string
+              example: 20        
+            RaceTable:
+              type: object
+              properties:
+                season:
+                  type: string
+                Races:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Race'  
+
+  parameters:
+    offsetParam:
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: The number of items to skip before starting to collect the result set.
+    limitParam:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 30
+      description: The numbers of items to return.
+    yearParam:
+        name: year
+        in: path
+        description: "Year in question"
+        required: true
+        schema:  
+          type: string
+          example: 2019
+    roundParam:
+      name: round
+      in: path
+      description: "Round in question"
+      required: true
+      schema:  
+        type: string
+        example: 1
+              
