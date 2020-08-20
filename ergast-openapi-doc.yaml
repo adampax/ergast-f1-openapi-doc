@@ -31,7 +31,11 @@ tags:
   externalDocs:
     description: Ergast Docs
     url: https://ergast.com/mrd/methods/drivers/
-- name: Races
+- name: Results
+  externalDocs:
+    description: Race Results
+    url: https://ergast.com/mrd/methods/results/ 
+- name: Schedule
   externalDocs:
     description: Race Schedule
     url: https://ergast.com/mrd/methods/schedule/        
@@ -100,7 +104,7 @@ paths:
       - $ref: '#/components/parameters/limitParam'  
     get:
       tags:
-      - Races
+      - Results
       description: ""
       operationId: getResultsByYear
       parameters:
@@ -119,7 +123,7 @@ paths:
       - $ref: '#/components/parameters/limitParam'  
     get:
       tags:
-      - Races
+      - Results
       description: ""
       operationId: getResultsByYearAndRound
       parameters:
@@ -139,7 +143,7 @@ paths:
       - $ref: '#/components/parameters/limitParam'  
     get:
       tags:
-      - Races
+      - Schedule
       description: ""
       operationId: getSeasonByYear
       parameters:
