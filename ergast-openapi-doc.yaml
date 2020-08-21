@@ -16,7 +16,7 @@ info:
   license:
     name: This OpenAPI definition is under MIT License
     url: https://opensource.org/licenses/MIT
-  version: 1.0.0
+  version: 1.1.0
 externalDocs:
   description: The Ergast Developer API
   url: https://ergast.com/mrd/
@@ -116,6 +116,26 @@ paths:
             application/json:
               schema:
                 $ref:  "#/components/schemas/ResultsByYearResponse"
+
+  /{year}/constructors/{constructorId}/results.json:
+    parameters:
+      - $ref: '#/components/parameters/offsetParam'
+      - $ref: '#/components/parameters/limitParam'  
+    get:
+      tags:
+      - Results
+      description: ""
+      operationId: getResultsByYearAndConstructor
+      parameters:
+        - $ref: '#/components/parameters/yearParam'
+        - $ref: '#/components/parameters/constructorParam'
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/ResultsByYearResponse"                
   
   /{year}/{round}/results.json:
     parameters:
@@ -541,6 +561,15 @@ components:
         maximum: 1000
         default: 30
       description: The numbers of items to return.
+    constructorParam:
+        name: constructorId
+        in: path
+        description: "Limit results to this constructor"
+        required: true
+        schema:  
+          type: string
+          example: mercedes
+
     yearParam:
         name: year
         in: path
