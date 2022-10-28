@@ -157,6 +157,36 @@ paths:
               schema:
                 $ref:  "#/components/schemas/ResultsByYearResponse"
 
+  /{year}/drivers.json:
+    get:
+      tags:
+        - Drivers
+      description: ""
+      operationId: getDriversByYear
+      parameters:
+        - $ref: '#/components/parameters/yearParam'
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriversResponse"
+
+  /drivers.json:
+    get:
+      tags:
+        - Drivers
+      description: ""
+      operationId: getAllDrivers
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DriversResponse"
+
   /{year}.json:
     parameters:
       - $ref: '#/components/parameters/offsetParam'
@@ -422,7 +452,38 @@ components:
                               type: string
                             Constructor:
                               type: object 
-                              $ref: '#/components/schemas/Constructor'      
+                              $ref: '#/components/schemas/Constructor'
+
+    DriversResponse:
+      type: object
+      properties:
+        MRData:
+          type: object
+          properties:
+            xmlns:
+              type: string
+            series:
+              type: string
+            url:
+              type: string
+            limit:
+              type: string
+              example: 30
+            offset:
+              type: string
+              example: 0
+            total:
+              type: string
+              example: 20
+            DriverTable:
+              type: object
+              properties:
+                Drivers:
+                  type: array
+                  items:
+                    type: object
+                    $ref: '#/components/schemas/Driver'
+
     DriverStandingsByYearResponse:
       type: object
       properties:
@@ -454,9 +515,9 @@ components:
                   items:
                     type: object
                     properties:
-                      season: 
+                      season:
                         type: string
-                      round: 
+                      round:
                         type: string
                       DriverStandings:
                         type: array
@@ -467,17 +528,17 @@ components:
                               type: string
                             positionText:
                               type: string
-                            points: 
+                            points:
                               type: string
                             wins:
                               type: string
                             Driver:
-                              type: object 
-                              $ref: '#/components/schemas/Driver'                                          
+                              type: object
+                              $ref: '#/components/schemas/Driver'
                             Constructors:
-                              type: array 
+                              type: array
                               items:
-                                $ref: '#/components/schemas/Constructor'    
+                                $ref: '#/components/schemas/Constructor'
     ResultsByYearResponse:
       type: object
       properties:
